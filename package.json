@@ -1,0 +1,25 @@
+{
+  "name": "snowcident",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && npm run serve",
+    "serve": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shahar-Y/Snowcident.git"
+  },
+  "author": "Shahar-Y",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shahar-Y/Snowcident/issues"
+  },
+  "homepage": "https://github.com/Shahar-Y/Snowcident#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "typescript": "^5.0.4"
+  }
+}

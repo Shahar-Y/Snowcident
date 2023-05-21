@@ -1,0 +1,18 @@
+# docker-compose for the OneReport project
+# docker compose -f "docker-compose.yaml" up -d --build --force-recreate
+version: "3.7"
+services:
+  one-report:
+    build: .
+    # image: one-report:latest
+    container_name: snowcident
+    volumes:
+      - orvol:/usr/src/app/data
+    restart: always
+    ports:
+      - 3003:3003
+    env_file:
+      - .env
+volumes:
+  orvol:
+    # external: true

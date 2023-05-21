@@ -6,6 +6,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 export const config = {
   port: process.env.PORT || 3000,
   ip: process.env.IP || "xxx.xxx.xxx.xxx",
+  snowPort: process.env.SNOW_PORT || 16000,
   snow: {
     username: process.env.SNOW_USERNAME || "userName",
     password: process.env.SNOW_PASSWORD || "Password!",

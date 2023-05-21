@@ -12,3 +12,8 @@ export type IncidentRequest = {
   service_offering: string; // Depends on the business service. reference. Unique, get it from the Snow supporter. This is the sys_id of your application
   u_network: string; // Which network you are using currently. Choice: http://68.219.116.115:16000/api/now/table/sys_choice?element=u_network&language=he&name=incident ==> label
 };
+
+export enum ChoiceType {
+  NETWORK = "u_network",
+  CATEGORY = "category",
+}

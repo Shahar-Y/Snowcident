@@ -1,46 +1,26 @@
 import { config } from "./config";
 import axios from "axios";
-import { ChoiceType } from "./types";
+import { ChoiceType, IncidentRequest } from "./types";
 
 // Create a post request to the snow api using axios, with basic auth
 // Generate an incident with the given parameters
 export async function generateIncident(
-  description: string,
-  short_description: string,
-  assignment_group: string,
-  business_service: string,
-  caller_id: string,
-  category: string,
-  service_offering: string,
-  u_network: string
+  IncidentRequest: IncidentRequest
 ): Promise<any> {
   const url = `http://${config.ip}:${config.snowPort}/api/now/table/incident`;
   console.log(url);
   try {
-    const response = await axios.post(
-      url,
-      {
-        description,
-        short_description,
-        assignment_group,
-        business_service,
-        caller_id,
-        category,
-        service_offering,
-        u_network,
+    const response = await axios.post(url, IncidentRequest, {
+      auth: {
+        username: config.snow.username,
+        password: config.snow.password,
       },
-      {
-        auth: {
-          username: config.snow.username,
-          password: config.snow.password,
-        },
-      }
-    );
+    });
     return response.data;
   } catch (error) {
     console.log(error);
+    return { error, message: "Error creating incident" };
   }
-  return {};
 }
 
 // Create a get request to the snow api using axios, with basic auth

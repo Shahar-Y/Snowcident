@@ -7,8 +7,8 @@ import { ChoiceType, IncidentRequest } from "./types";
 export async function generateIncident(
   IncidentRequest: IncidentRequest
 ): Promise<any> {
-  const url = `http://${config.ip}:${config.snowPort}/api/now/table/incident`;
-  console.log(url);
+  const url = `${config.snowURL}:${config.snowPort}/api/now/table/incident`;
+  console.log(`Generating incident to ${url}`);
   try {
     const response = await axios.post(url, IncidentRequest, {
       auth: {
@@ -26,8 +26,8 @@ export async function generateIncident(
 // Create a get request to the snow api using axios, with basic auth
 // Then, extract the choices from the "label" field
 export async function getChoices(choiceType: ChoiceType): Promise<any[]> {
-  const url = `http://${config.ip}:${config.snowPort}/api/now/table/sys_choice?element=${choiceType}&language=he&name=incident`;
-  console.log(url);
+  const url = `${config.snowURL}:${config.snowPort}/api/now/table/sys_choice?element=${choiceType}&language=he&name=incident`;
+  console.log(`Getting choices from ${url}`);
   try {
     const response = await axios.get(url, {
       auth: {
@@ -50,8 +50,8 @@ export async function getChoices(choiceType: ChoiceType): Promise<any[]> {
 
 // Translates the kartoffel id to the snow id
 export async function getCallerId(kartoffelId: string): Promise<string> {
-  const url = `http://${config.ip}:${config.snowPort}/api/now/table/sys_user?sysparm_query=u_uuid%3D${kartoffelId}`;
-  console.log(url);
+  const url = `${config.snowURL}:${config.snowPort}/api/now/table/sys_user?sysparm_query=u_uuid%3D${kartoffelId}`;
+  console.log(`Getting caller id from ${url}`);
   try {
     const response = await axios.get(url, {
       auth: {

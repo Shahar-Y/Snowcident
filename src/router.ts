@@ -7,38 +7,57 @@ export const app: Express = express();
 
 app.use(bodyParser.json());
 
+// IsAlive endpoint
+app.get("/isAlive", (req: Request, res: Response) => {
+  res.send("I'm alive");
+});
+
+// General "POST" endpoint
+app.post("/tryPost", (req: Request, res: Response) => {
+  console.log("POST request received. body:");
+  console.log(req.body);
+  res.send("POST request received");
+});
+
 // Create a new incident. See the types.ts file for the required fields.`
 app.post("/createIncident", async (req: Request, res: Response) => {
   console.log("Creating incident. body:");
   console.log(req.body);
 
-  const IncidentRequest: IncidentRequest = {
-    description: req.body.description || "Description",
+  try {
+    const IncidentRequest: IncidentRequest = {
+      description: req.body.description || "Description",
 
-    short_description: req.body.short_description || "Short description",
+      short_description: req.body.short_description || "Short description",
 
-    assignment_group:
-      req.body.assignment_group || config.example.exampleAssignmentGroup,
+      assignment_group:
+        req.body.assignment_group || config.example.exampleAssignmentGroup,
 
-    business_service:
-      req.body.business_service || config.example.exampleBusinessService,
+      business_service:
+        req.body.business_service || config.example.exampleBusinessService,
 
-    caller_id:
-      req.body.caller_id || (await getCallerId(config.example.exampleCallerId)),
+      caller_id:
+        req.body.caller_id ||
+        (await getCallerId(config.example.exampleCallerId)),
 
-    category: req.body.category || (await getChoices(ChoiceType.CATEGORY))[0],
+      category: req.body.category || (await getChoices(ChoiceType.CATEGORY))[0],
 
-    service_offering:
-      req.body.service_offering || config.example.exampleServiceOffering,
+      service_offering:
+        req.body.service_offering || config.example.exampleServiceOffering,
 
-    u_network: req.body.u_network || (await getChoices(ChoiceType.NETWORK))[0],
-  };
+      u_network:
+        req.body.u_network || (await getChoices(ChoiceType.NETWORK))[0],
+    };
 
-  console.log("Incident request: ", IncidentRequest);
+    console.log("Incident request: ", IncidentRequest);
 
-  const generatedIncidenResponse = await generateIncident(IncidentRequest);
+    const generatedIncidenResponse = await generateIncident(IncidentRequest);
 
-  console.log("Generated incident response: ", generatedIncidenResponse);
+    console.log("Generated incident response: ", generatedIncidenResponse);
 
-  res.send(generatedIncidenResponse);
+    res.send(generatedIncidenResponse);
+  } catch (error) {
+    console.log(error);
+    res.send({ error, message: "Error creating incident" });
+  }
 });
